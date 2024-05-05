@@ -40,5 +40,4 @@ class FacadeTest extends TestCase
             self::assertEquals('Ivan Keren', $firstName);
     }
 
-
 }
