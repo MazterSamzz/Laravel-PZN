@@ -18,13 +18,13 @@ class InputController extends Controller
         $name = $request->name;
         return "Hello $name";
     }
-    
+
     public function helloFirstName(Request $request)
     {
         $firstName = $request->input('name.first');
         return "Hello $firstName";
     }
-    
+
     public function helloInput(Request $request)
     {
         $input = $request->input();
@@ -48,5 +48,24 @@ class InputController extends Controller
             'married' => $married,
             'birth_date' => $birthDate->format('Y-m-d'),
         ]);
+    }
+
+    public function filterOnly(Request $request): string
+    {
+        $name = $request->only('name.first', 'name.last');
+        return json_encode($name);
+    }
+
+    public function filterExcept(Request $request): string
+    {
+        $user = $request->except('admin');
+        return json_encode($user);
+    }
+
+    public function filterMerge(Request $request)
+    {
+        $request->merge(['admin' => false]);
+        $user = $request->input();
+        return json_encode($user);
     }
 }

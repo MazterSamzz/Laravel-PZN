@@ -34,15 +34,15 @@ Route::get('/products/{id}/items/{item}', function ($productId, $itemId) {
     return "Product $productId, Item $itemId";
 })->name('product.item.detail');
 
-Route::get('/categories/{id}', function($categoryId) {
+Route::get('/categories/{id}', function ($categoryId) {
     return "Category $categoryId";
 })->where('id', '[0-9]+')->name('category.detail');
 
-Route::get('/users/{id?}', function($userId = '404') {
+Route::get('/users/{id?}', function ($userId = '404') {
     return "User $userId";
 })->name('user.detail');
 
-Route::get('/conflict/eko', function() {
+Route::get('/conflict/eko', function () {
     return "Conflict Eko Kurniawan Khannedy";
 });
 
@@ -67,4 +67,9 @@ Route::post('/input/hello', [App\Http\Controllers\InputController::class, 'hello
 Route::post('/input/hello/first', [App\Http\Controllers\InputController::class, 'helloFirstName']);
 Route::post('/input/hello/input', [App\Http\Controllers\InputController::class, 'helloInput']);
 Route::post('/input/hello/array', [App\Http\Controllers\InputController::class, 'helloArray']);
+
 Route::post('/input/type', [App\Http\Controllers\InputController::class, 'inputType']);
+
+Route::post('input/filter/only', [App\Http\Controllers\InputController::class, 'filterOnly']);
+Route::post('input/filter/except', [App\Http\Controllers\InputController::class, 'filterExcept']);
+Route::post('input/filter/merge', [App\Http\Controllers\InputController::class, 'filterMerge']);
