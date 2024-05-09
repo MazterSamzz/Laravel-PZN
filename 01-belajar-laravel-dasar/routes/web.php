@@ -95,3 +95,10 @@ Route::get('/redirect/name', [App\Http\Controllers\RedirectController::class, 'r
 Route::get('/redirect/name/{name}', [App\Http\Controllers\RedirectController::class, 'redirectHello'])->name('redirect-hello');
 Route::get('/redirect/action', [App\Http\Controllers\RedirectController::class, 'redirectAction']);
 Route::get('/redirect/away', [App\Http\Controllers\RedirectController::class, 'redirectAway']);
+
+Route::get('/middleware/api', function () {
+    return 'OK';
+})->middleware('contoh:PZN,401');
+Route::get('middleware/group', function () {
+    return 'OK';
+})->middleware('pzn');
