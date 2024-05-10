@@ -11,9 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->validateCsrfTokens(except: [
-            '/*',
-        ]);
+        // Disable CSRF
+        // $middleware->validateCsrfTokens(except: [
+        //     '/*',
+        // ]);
 
         // Append the Middleware class to the middleware stack
         // $middleware->append([
