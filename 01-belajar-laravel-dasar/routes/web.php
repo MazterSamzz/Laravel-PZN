@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 Route::get('/', function () {
     return view('welcome');
@@ -105,6 +106,11 @@ Route::prefix('/redirect')->controller(App\Http\Controllers\RedirectController::
     Route::get('/to', 'redirectTo');
     Route::get('/name', 'redirectName');
     Route::get('/name/{name}', 'redirectHello')->name('redirect-hello');
+    Route::get('/named', function () {
+        // return route('redirect-hello', ['name' => 'Ivan']);
+        // return url()->route('redirect-hello', ['name' => 'Ivan']);
+        return URL::route('redirect-hello', ['name' => 'Ivan']);
+    });
     Route::get('/action', 'redirectAction');
     Route::get('/away', 'redirectAway');
 });
@@ -121,4 +127,15 @@ Route::middleware(['contoh:PZN,401'])->group(function () {
 Route::prefix('/form')->controller(App\Http\Controllers\FormController::class)->group(function () {
     Route::get('/', 'form');
     Route::post('/', 'submitForm');
+});
+
+Route::prefix('/url')->group(function () {
+    Route::get('/current', function () {
+        return URL::full();
+    });
+    Route::get('/action', function () {
+        // return action([App\Http\Controllers\FormController::class, 'form'], []);
+        // return url()->action([App\Http\Controllers\FormController::class, 'form'], []);
+        return URL::action([App\Http\Controllers\FormController::class, 'form'] . []);
+    });
 });
