@@ -157,3 +157,15 @@ Route::prefix('/error')->group(function () {
         throw new App\Exceptions\ValidationException("Validation Error");
     });
 });
+
+Route::prefix('/abort')->group(function () {
+    Route::get('/400', function () {
+        return abort(400, 'Ups Validation Error');
+    });
+    Route::get('/401', function () {
+        return abort(401);
+    });
+    Route::get('/500', function () {
+        return abort(500);
+    });
+});
