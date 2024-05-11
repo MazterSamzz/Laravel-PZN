@@ -9,7 +9,9 @@ Route::get('/', function () {
 Route::view('/template', 'template');
 
 Route::controller(\App\Http\Controllers\UserController::class)->group(function () {
-    Route::get('/login', 'login');
-    Route::post('/login', 'doLogin');
+    Route::middleware(App\Http\Middleware\OnlyGuestMiddleware::class)->group(function () {
+        Route::get('/login', 'login');
+        Route::post('/login', 'doLogin');
+    });
     Route::post('/logout', 'logout');
 });
