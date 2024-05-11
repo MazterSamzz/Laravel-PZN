@@ -139,3 +139,8 @@ Route::prefix('/url')->group(function () {
         return URL::action([App\Http\Controllers\FormController::class, 'form'] . []);
     });
 });
+
+Route::prefix('/session')->controller('App\Http\Controllers\SessionController')->group(function () {
+    Route::get('/create', 'createSession');
+    Route::get('/get', 'getSession');
+});
