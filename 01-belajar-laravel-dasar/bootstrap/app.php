@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Validation\ValidationData;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -30,5 +31,20 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+
+        // Report when Errors Occur (Usualy sent to Slack or Sentry)
+        $exceptions->report(function (Throwable $e) {
+            var_dump($e);
+            return false; // Break the exception chain
+        });
+
+        // Dont Report when Errors Occur
+        $exceptions->dontReport([
+            App\Exceptions\ValidationException::class,
+        ]);
+
+        // Custom Exception
+        $exceptions->renderable(function (App\Exceptions\ValidationException $e, Illuminate\Http\Request $request) {
+            return response('Bad Request', 400);
+        });
     })->create();

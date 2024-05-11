@@ -144,3 +144,16 @@ Route::prefix('/session')->controller('App\Http\Controllers\SessionController')-
     Route::get('/create', 'createSession');
     Route::get('/get', 'getSession');
 });
+
+Route::prefix('/error')->group(function () {
+    Route::get('/sample', function () {
+        throw new Exception("Sample Error");
+    });
+    Route::get('/manual', function () {
+        report(new Exception("Sample Error"));
+        return 'OK';
+    });
+    Route::get('/validation', function () {
+        throw new App\Exceptions\ValidationException("Validation Error");
+    });
+});
