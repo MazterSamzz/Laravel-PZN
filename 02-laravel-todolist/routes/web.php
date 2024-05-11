@@ -13,5 +13,5 @@ Route::controller(\App\Http\Controllers\UserController::class)->group(function (
         Route::get('/login', 'login');
         Route::post('/login', 'doLogin');
     });
-    Route::post('/logout', 'logout');
+    Route::post('/logout', 'logout')->middleware([App\Http\Middleware\OnlyMemberMiddleware::class]);
 });
