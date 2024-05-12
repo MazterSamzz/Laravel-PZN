@@ -35,4 +35,28 @@ class TodoListServiceTest extends TestCase
             self::assertEquals('Ivan', $todo['todo']);
         }
     }
+
+    public function testGetTodoListEmpty()
+    {
+        self::assertEquals([], $this->todoListService->getTodoList());
+    }
+
+    public function testGetTodoListNotEmpty()
+    {
+        $expected = [
+            [
+                'id' => '1',
+                'todo' => 'Eko'
+            ],
+            [
+                'id' => '2',
+                'todo' => 'Joko'
+            ]
+        ];
+
+        $this->todoListService->saveTodo('1', 'Eko');
+        $this->todoListService->saveTodo('2', 'Joko');
+
+        self::assertEquals($expected, $this->todoListService->getTodoList());
+    }
 }

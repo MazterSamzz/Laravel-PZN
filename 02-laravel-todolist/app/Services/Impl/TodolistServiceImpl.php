@@ -15,4 +15,9 @@ class TodoListServiceImpl implements TodoListService
 
         Session::push('todoList', ['id' => $id, 'todo' => $todo]);
     }
+
+    public function getTodoList(): array
+    {
+        return Session::get('todoList', []);
+    }
 }
