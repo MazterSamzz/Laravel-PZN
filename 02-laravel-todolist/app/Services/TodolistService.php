@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
-interface TodolistService
+interface TodoListService
 {
+    public function saveTodo(string $id, string $todo): void;
 }
