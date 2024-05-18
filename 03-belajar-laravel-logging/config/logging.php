@@ -106,6 +106,17 @@ return [
             'processors' => [PsrLogMessageProcessor::class],
         ],
 
+        'file' => [
+            'driver' => 'monolog',
+            'level' => env('LOG_LEVEL', 'debug'),
+            'handler' => StreamHandler::class,
+            'formatter' => env('LOG_STDERR_FORMATTER'),
+            'with' => [
+                'stream' => storage_path('logs/application.log'),
+            ],
+            'processors' => [PsrLogMessageProcessor::class],
+        ],
+
         'syslog' => [
             'driver' => 'syslog',
             'level' => env('LOG_LEVEL', 'debug'),
