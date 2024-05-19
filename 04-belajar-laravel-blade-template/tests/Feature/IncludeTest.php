@@ -10,12 +10,12 @@ class IncludeTest extends TestCase
 {
     public function testInclude(): void
     {
-        $this->view('include')
+        $this->view('include.include')
             ->assertSeeText('Programmer Zaman Now')
             ->assertSeeText('Selamat Datang di Website kami')
             ->assertSeeText('Selamat Datang di Web');
 
-        $this->view('include', ['title' => 'Ivan'])
+        $this->view('include.include', ['title' => 'Ivan'])
             ->assertSeeText('Ivan')
             ->assertSeeText('Selamat Datang di Website kami')
             ->assertSeeText('Selamat Datang di Web');

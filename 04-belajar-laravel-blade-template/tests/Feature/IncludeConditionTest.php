@@ -13,7 +13,7 @@ class IncludeConditionTest extends TestCase
      */
     public function testIncludeCondition(): void
     {
-        $this->view('include-condition', [
+        $this->view('include-condition.include-condition', [
             'user' => [
                 'name' => 'Ivan',
                 'owner' => true
@@ -22,7 +22,7 @@ class IncludeConditionTest extends TestCase
             ->assertSeeText('Selamat Datang Ivan')
             ->assertDontSeeText('Semangat Bekerja');
 
-        $this->view('include-condition', [
+        $this->view('include-condition.include-condition', [
             'user' => [
                 'name' => 'Ivan',
                 'owner' => false
