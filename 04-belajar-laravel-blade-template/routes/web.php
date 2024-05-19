@@ -13,3 +13,8 @@ Route::get('/hello', function () {
 Route::get('/world', function () {
     return view('hello.world', ['name' => 'Ivan']);
 });
+
+
+Route::get('/html-encoding', function (\Illuminate\Http\Request $request) {
+    return view('html-encoding', ['name' => $request->input('name')]);
+});
