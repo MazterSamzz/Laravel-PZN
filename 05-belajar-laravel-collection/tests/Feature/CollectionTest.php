@@ -161,4 +161,13 @@ class CollectionTest extends TestCase
 
         $this->assertEqualsCanonicalizing(["Programming", "Gaming", "Reading, Writing"], $hobbies->all());
     }
+
+    public function testStringRepresentation(): void
+    {
+        $collection = collect(['Samuel', 'Ivan', 'Kristyanto']);
+
+        $this->assertEquals("Samuel-Ivan-Kristyanto", $collection->join('-'));
+        $this->assertEquals("Samuel-Ivan_Kristyanto", $collection->join('-', '_'));
+        $this->assertEquals("Samuel, Ivan and Kristyanto", $collection->join(', ', ' and '));
+    }
 }
