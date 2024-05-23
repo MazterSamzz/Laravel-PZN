@@ -334,4 +334,16 @@ class CollectionTest extends TestCase
         });
         $this->assertEqualsCanonicalizing([3, 4, 5, 6, 7, 8, 9], $result->all());
     }
+
+    public function testChunked(): void
+    {
+        $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+        $result = $collection->chunk(3);
+
+        $this->assertEqualsCanonicalizing([collect([1, 2, 3])], [$result->all()[0]]);
+        $this->assertEqualsCanonicalizing([collect([4, 5, 6])], [$result->all()[1]]);
+        $this->assertEqualsCanonicalizing([7, 8, 9], $result->all()[2]->all());
+        $this->assertEqualsCanonicalizing([10], $result->all()[3]->all());
+    }
 }
