@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Data\Person;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\LazyCollection;
 use Tests\TestCase;
 
 class CollectionTest extends TestCase
@@ -455,6 +456,21 @@ class CollectionTest extends TestCase
         // reduce(21,7) = 28
         // reduce(28,8) = 36
         // reduce(36,9) = 45
+    }
 
+    // ============================================ 25 Lazy Collection ============================================
+    public function testLazyCollection(): void
+    {
+        $collection = LazyCollection::make(function () {
+            $value = 0;
+
+            while (true) {
+                yield $value;
+                $value++;
+            }
+        });
+
+        $result = $collection->take(10);
+        $this->assertEqualsCanonicalizing([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], $result->all());
     }
 }
