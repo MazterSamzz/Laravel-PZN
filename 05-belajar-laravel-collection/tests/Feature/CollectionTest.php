@@ -15,6 +15,7 @@ class CollectionTest extends TestCase
         $collection = collect([1, 2, 3]);
         $this->assertEqualsCanonicalizing([1, 2, 3], $collection->all());
     }
+
     // ============================================ 05 For Each ============================================
     public function testForEach(): void
     {
@@ -24,6 +25,7 @@ class CollectionTest extends TestCase
             $this->assertEquals($key + 1, $value);
         }
     }
+
     // ============================================ 06 Manipulasi Collection ============================================
     public function testCrud(): void
     {
@@ -35,6 +37,7 @@ class CollectionTest extends TestCase
         $this->assertEquals(3, $result);
         $this->assertEqualsCanonicalizing([1, 2], $collection->all());
     }
+
     // ============================================ 07 Mapping ============================================
     public function testMap(): void
     {
@@ -96,6 +99,7 @@ class CollectionTest extends TestCase
             "HR" => collect(["Budi"])
         ], $result->all());
     }
+
     // ============================================ 08 Zipping ============================================
     public function testZip()
     {
@@ -130,6 +134,7 @@ class CollectionTest extends TestCase
             'country' => 'Indonesia'
         ], $collection3->all());
     }
+
     // ============================================ 09 Flattening ============================================
     public function testCollapse(): void
     {
@@ -162,6 +167,7 @@ class CollectionTest extends TestCase
 
         $this->assertEqualsCanonicalizing(["Programming", "Gaming", "Reading, Writing"], $hobbies->all());
     }
+
     // ============================================ 10 String Representation ============================================
     public function testStringRepresentation(): void
     {
@@ -171,6 +177,7 @@ class CollectionTest extends TestCase
         $this->assertEquals("Samuel-Ivan_Kristyanto", $collection->join('-', '_'));
         $this->assertEquals("Samuel, Ivan and Kristyanto", $collection->join(', ', ' and '));
     }
+
     // ============================================ 11 Filtering ============================================
     public function testFilter(): void
     {
@@ -200,6 +207,7 @@ class CollectionTest extends TestCase
 
         $this->assertEqualsCanonicalizing([2, 4, 6, 8, 10], $result->all());
     }
+
     // ============================================ 12 Partitioning ============================================
     public function testPartitioning(): void
     {
@@ -216,6 +224,7 @@ class CollectionTest extends TestCase
         $this->assertEquals(['Ivan' => 100, 'Budi' => 90], $result1->all());
         $this->assertEquals(['Kris' => 80], $result2->all());
     }
+
     // ============================================ 13 Testing ============================================
     public function testTesting(): void
     {
@@ -226,6 +235,7 @@ class CollectionTest extends TestCase
             return $value == 'Kristyanto';
         }));
     }
+
     // ============================================ 14 Grouping ============================================
     public function testGrouping(): void
     {
@@ -288,6 +298,7 @@ class CollectionTest extends TestCase
             ])
         ], $result->all());
     }
+
     // ============================================ 15 Slicing ============================================
     public function testSlice(): void
     {
@@ -299,6 +310,7 @@ class CollectionTest extends TestCase
         $result = $collection->slice(3, 2);
         $this->assertEqualsCanonicalizing([4, 5], $result->all());
     }
+
     // ============================================ 16 Take and Skip ============================================
     public function testTake(): void
     {
@@ -335,6 +347,7 @@ class CollectionTest extends TestCase
         });
         $this->assertEqualsCanonicalizing([3, 4, 5, 6, 7, 8, 9], $result->all());
     }
+
     // ============================================ 17 Chunked ============================================
     public function testChunked(): void
     {
@@ -347,6 +360,7 @@ class CollectionTest extends TestCase
         $this->assertEqualsCanonicalizing([7, 8, 9], $result->all()[2]->all());
         $this->assertEqualsCanonicalizing([10], $result->all()[3]->all());
     }
+
     // ============================================ 18 Retrieve ============================================
     public function testFirst(): void
     {
@@ -373,6 +387,7 @@ class CollectionTest extends TestCase
         });
         $this->assertEquals(4, $result);
     }
+
     // ============================================ 19 Random ============================================
     public function testRandom(): void
     {
@@ -380,5 +395,45 @@ class CollectionTest extends TestCase
         $result = $collection->random();
         echo $result;
         $this->assertTrue(in_array($result, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
+    }
+
+    // ============================================ 20 Checking Existance ============================================
+    public function testCheckingExistence(): void
+    {
+        $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        $this->assertTrue($collection->isNotEmpty());
+        $this->assertFalse($collection->isEmpty());
+        $this->assertTrue($collection->contains(1));
+        $this->assertFalse($collection->contains(0));
+    }
+
+    // ============================================ 21 Ordering ============================================
+    public function testOrdering(): void
+    {
+        $collection = collect([1, 3, 2, 4, 6, 5, 7, 9, 8]);
+
+        $result = $collection->sort();
+        $this->assertEqualsCanonicalizing([1, 2, 3, 4, 5, 6, 7, 8, 9], $result->all());
+
+        $result = $collection->sortDesc();
+        $this->assertEqualsCanonicalizing([9, 8, 7, 6, 5, 4, 3, 2, 1], $result->all());
+    }
+
+    // ============================================ 22 Aggregate ============================================
+    public function testAggregate(): void
+    {
+        $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+        $result = $collection->sum();
+        $this->assertEquals(45, $result);
+
+        $result = $collection->avg();
+        $this->assertEquals(5, $result);
+
+        $result = $collection->min();
+        $this->assertEquals(1, $result);
+
+        $result = $collection->max();
+        $this->assertEquals(9, $result);
     }
 }
