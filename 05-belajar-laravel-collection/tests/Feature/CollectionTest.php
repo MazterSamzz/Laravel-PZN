@@ -9,12 +9,13 @@ use Tests\TestCase;
 
 class CollectionTest extends TestCase
 {
+    // ============================================ 04 Membuat Collection ============================================
     public function testCreateCollection(): void
     {
         $collection = collect([1, 2, 3]);
         $this->assertEqualsCanonicalizing([1, 2, 3], $collection->all());
     }
-
+    // ============================================ 05 For Each ============================================
     public function testForEach(): void
     {
         $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9]);
@@ -23,7 +24,7 @@ class CollectionTest extends TestCase
             $this->assertEquals($key + 1, $value);
         }
     }
-
+    // ============================================ 06 Manipulasi Collection ============================================
     public function testCrud(): void
     {
         $collection = collect([]);
@@ -34,7 +35,7 @@ class CollectionTest extends TestCase
         $this->assertEquals(3, $result);
         $this->assertEqualsCanonicalizing([1, 2], $collection->all());
     }
-
+    // ============================================ 07 Mapping ============================================
     public function testMap(): void
     {
         $collection = collect([1, 2, 3]);
@@ -95,7 +96,7 @@ class CollectionTest extends TestCase
             "HR" => collect(["Budi"])
         ], $result->all());
     }
-
+    // ============================================ 08 Zipping ============================================
     public function testZip()
     {
         $collection1 = collect(1, 2, 3);
@@ -129,7 +130,7 @@ class CollectionTest extends TestCase
             'country' => 'Indonesia'
         ], $collection3->all());
     }
-
+    // ============================================ 09 Flattening ============================================
     public function testCollapse(): void
     {
         $collection = collect([
@@ -161,7 +162,7 @@ class CollectionTest extends TestCase
 
         $this->assertEqualsCanonicalizing(["Programming", "Gaming", "Reading, Writing"], $hobbies->all());
     }
-
+    // ============================================ 10 String Representation ============================================
     public function testStringRepresentation(): void
     {
         $collection = collect(['Samuel', 'Ivan', 'Kristyanto']);
@@ -170,7 +171,7 @@ class CollectionTest extends TestCase
         $this->assertEquals("Samuel-Ivan_Kristyanto", $collection->join('-', '_'));
         $this->assertEquals("Samuel, Ivan and Kristyanto", $collection->join(', ', ' and '));
     }
-
+    // ============================================ 11 Filtering ============================================
     public function testFilter(): void
     {
         $collection = collect([
@@ -199,7 +200,7 @@ class CollectionTest extends TestCase
 
         $this->assertEqualsCanonicalizing([2, 4, 6, 8, 10], $result->all());
     }
-
+    // ============================================ 12 Partitioning ============================================
     public function testPartitioning(): void
     {
         $collection = collect([
@@ -215,7 +216,7 @@ class CollectionTest extends TestCase
         $this->assertEquals(['Ivan' => 100, 'Budi' => 90], $result1->all());
         $this->assertEquals(['Kris' => 80], $result2->all());
     }
-
+    // ============================================ 13 Testing ============================================
     public function testTesting(): void
     {
         $collection = collect(['Samuel', 'Ivan', 'Kristyanto']);
@@ -225,7 +226,7 @@ class CollectionTest extends TestCase
             return $value == 'Kristyanto';
         }));
     }
-
+    // ============================================ 14 Grouping ============================================
     public function testGrouping(): void
     {
         $collection = collect([
@@ -287,7 +288,7 @@ class CollectionTest extends TestCase
             ])
         ], $result->all());
     }
-
+    // ============================================ 15 Slicing ============================================
     public function testSlice(): void
     {
         $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9]);
@@ -298,7 +299,7 @@ class CollectionTest extends TestCase
         $result = $collection->slice(3, 2);
         $this->assertEqualsCanonicalizing([4, 5], $result->all());
     }
-
+    // ============================================ 16 Take and Skip ============================================
     public function testTake(): void
     {
         $collection = collect([1, 2, 3, 1, 2, 3, 1, 2, 3]);
@@ -334,7 +335,7 @@ class CollectionTest extends TestCase
         });
         $this->assertEqualsCanonicalizing([3, 4, 5, 6, 7, 8, 9], $result->all());
     }
-
+    // ============================================ 17 Chunked ============================================
     public function testChunked(): void
     {
         $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -345,5 +346,31 @@ class CollectionTest extends TestCase
         $this->assertEqualsCanonicalizing([collect([4, 5, 6])], [$result->all()[1]]);
         $this->assertEqualsCanonicalizing([7, 8, 9], $result->all()[2]->all());
         $this->assertEqualsCanonicalizing([10], $result->all()[3]->all());
+    }
+    // ============================================ 18 Retrieve ============================================
+    public function testFirst()
+    {
+        $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+        $result = $collection->first();
+        $this->assertEquals(1, $result);
+
+        $result = $collection->first(function ($value, $key) {
+            return $value > 5;
+        });
+        $this->assertEquals(6, $result);
+    }
+
+    public function testLast(): void
+    {
+        $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+        $result = $collection->last();
+        $this->assertEquals(10, $result);
+
+        $result = $collection->last(function ($value, $key) {
+            return $value < 5;
+        });
+        $this->assertEquals(4, $result);
     }
 }
