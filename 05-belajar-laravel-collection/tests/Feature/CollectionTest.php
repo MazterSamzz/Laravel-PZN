@@ -348,7 +348,7 @@ class CollectionTest extends TestCase
         $this->assertEqualsCanonicalizing([10], $result->all()[3]->all());
     }
     // ============================================ 18 Retrieve ============================================
-    public function testFirst()
+    public function testFirst(): void
     {
         $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
@@ -372,5 +372,13 @@ class CollectionTest extends TestCase
             return $value < 5;
         });
         $this->assertEquals(4, $result);
+    }
+    // ============================================ 19 Random ============================================
+    public function testRandom(): void
+    {
+        $collection = collect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        $result = $collection->random();
+        echo $result;
+        $this->assertTrue(in_array($result, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
     }
 }
