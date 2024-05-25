@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Psy\Command\WhereamiCommand;
 use Tests\TestCase;
 
 class QueryBuilderTest extends TestCase
@@ -42,6 +44,116 @@ class QueryBuilderTest extends TestCase
         $collection = DB::table('categories')->select(['id', 'name'])->get();
         self::assertNotNull($collection);
 
+        $collection->each(function ($item) {
+            Log::info(json_encode($item));
+        });
+    }
+
+    public function insertCategories()
+    {
+        DB::table('categories')->insert([
+            'id' => 'SMARTPHONE',
+            'name' => 'Smartphone',
+            'created_at' => '2024-01-01 00:00:00'
+        ]);
+        DB::table('categories')->insert([
+            'id' => 'FOOD',
+            'name' => 'Food',
+            'created_at' => '2024-01-02 00:00:00'
+        ]);
+        DB::table('categories')->insert([
+            'id' => 'LAPTOP',
+            'name' => 'Laptop',
+            'created_at' => '2024-01-03 00:00:00'
+        ]);
+        DB::table('categories')->insert([
+            'id' => 'FASHION',
+            'name' => 'Fashion',
+            'created_at' => '2024-01-04 00:00:00'
+        ]);
+    }
+
+    // where (column, operator, value)      || AND column operator value
+    // where ([condition 1, condition 2])   || AND (condition 1 AND condition 2)
+    // where (callback(Builder))            || AND (condition)
+    // orWhere (column, operator, value)    || OR column operator value
+    // orWhere ([condition 1, condition 2]) || OR (condition 1 OR condition 2)
+    // orWhere (callback(Builder))          || OR (condition)
+    // whereNot(callback(Builder))          || NOT (condition)
+    public function testWhere(): void
+    {
+        $this->insertCategories();
+
+        $collection = DB::table('categories')->where(function (Builder $builder) {
+            $builder->where('id', '=', 'SMARTPHONE');
+            $builder->orWhere('id', '=', 'FOOD');
+            // SELECT * FROM categories WHERE id = 'SMARTPHONE' OR id = 'LAPTOP'
+        })->get();
+
+        self::assertCount(2, $collection);
+        $collection->each(function ($item) {
+            Log::info(json_encode($item));
+        });
+    }
+
+    // whereBetween (column, [value1, value2])      || AND column BETWEEN value1 AND value2
+    // whereNotBetween (column, [value1, value2])   || AND column NOT BETWEEN value1 AND value2
+    public function testBetween(): void
+    {
+        $this->insertCategories();
+
+        $collection = DB::table('categories')
+            ->whereBetween('created_at', ['2024-01-01 00:00:00', '2024-01-03 23:59:59'])->get();
+
+        self::assertCount(3, $collection);
+        $collection->each(function ($item) {
+            Log::info(json_encode($item));
+        });
+    }
+
+    // whereIN (column, [array]) || AND column IN (array)
+    // whereNotIN (column, [array]) || AND column NOT IN (array)
+    public function testWhereIn(): void
+    {
+        $this->insertCategories();
+
+        $collection = DB::table('categories')
+            ->whereIn('id', ['SMARTPHONE', 'FOOD'])->get();
+
+        self::assertCount(2, $collection);
+        $collection->each(function ($item) {
+            Log::info(json_encode($item));
+        });
+    }
+
+    // whereNull (column)       || AND column IS NULL
+    // whereNotNull (column)    || AND column IS NOT NULL
+    public function testWhereNull(): void
+    {
+        $this->insertCategories();
+
+        $collection = DB::table('categories')
+            ->whereNull('description')->get();
+
+        self::assertCount(4, $collection);
+        $collection->each(function ($item) {
+            Log::info(json_encode($item));
+        });
+    }
+
+    // whereDate (column, date) || WHERE DATE(column) = date
+    // whereDay (column, day) || WHERE DAY(column) = day
+    // whereMonth (column, month) || WHERE MONTH(column) = month
+    // whereYear (column, year) || WHERE YEAR(column) = year
+    // whereTime (column, time) || WHERE TIME(column) = time
+    public function testWhereDate(): void
+    {
+        $this->insertCategories();
+
+        $collection = DB::table('categories')
+            ->whereDate('created_at', '2024-01-01')->get();
+
+        self::assertCount(1, $collection);
         $collection->each(function ($item) {
             Log::info(json_encode($item));
         });
