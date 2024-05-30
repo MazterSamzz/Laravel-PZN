@@ -1,0 +1,20 @@
+01 Belajar Laravel Dasar
+https://github.com/ProgrammerZamanNow/belajar-laravel-dasar
+
+02 Web Login dan Todo List
+https://github.com/ProgrammerZamanNow/laravel-dasar-todolist
+
+03 Laravel Logging
+https://github.com/ProgrammerZamanNow/belajar-laravel-logging
+
+04 Laravel Blade Template
+https://github.com/ProgrammerZamanNow/belajar-laravel-blade-template
+
+05 Laravel Collection
+https://github.com/ProgrammerZamanNow/belajar-laravel-collection
+
+06 Laravel Database
+https://github.com/ProgrammerZamanNow/belajar-laravel-database
+
+07 Laravel Eloquent
+https://github.com/ProgrammerZamanNow/belajar-laravel-eloquent
