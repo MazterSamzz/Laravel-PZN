@@ -10,6 +10,31 @@ use Tests\TestCase;
 
 class CategoryTest extends TestCase
 {
+    protected function seedCategories($qty): array
+    {
+        $categories = [];
+
+        for ($i = 0; $i < $qty; $i++) {
+            $categories[] = [
+                "id" => "ID $i",
+                "name" => "Category $i"
+            ];
+        }
+
+        return $categories;
+    }
+
+    protected function insertCategories($qty): void
+    {
+        for ($i = 0; $i < $qty; $i++) {
+            $category = new Category();
+
+            $category->id = "ID $i";
+            $category->name = "Category $i";
+            $category->save();
+        }
+    }
+
     public function testInsert(): void
     {
         $category = new Category();
@@ -20,17 +45,9 @@ class CategoryTest extends TestCase
 
         self::assertTrue($result);
     }
-
     public function testInsertManyCategories(): void
     {
-        $categories = [];
-
-        for ($i = 0; $i < 10; $i++) {
-            $categories[] = [
-                "id" => "ID $i",
-                "name" => "Category $i"
-            ];
-        }
+        $categories = $this->seedCategories(10);
 
         // $result = Category::query()->insert($categories);
         $result = Category::insert($categories);
@@ -68,13 +85,7 @@ class CategoryTest extends TestCase
 
     public function testSelect(): void
     {
-        for ($i = 0; $i < 5; $i++) {
-            $category = new Category();
-
-            $category->id = "ID $i";
-            $category->name = "Category $i";
-            $category->save();
-        }
+        $this->insertCategories(5);
 
         $categories = Category::whereNull("description")->get();
 
@@ -92,13 +103,7 @@ class CategoryTest extends TestCase
 
     public function testUpdateMany(): void
     {
-        $categories = [];
-        for ($i = 0; $i < 10; $i++) {
-            $categories[] = [
-                "id" => "ID $i",
-                "name" => "Category $i"
-            ];
-        }
+        $categories = $this->seedCategories(10);
 
         $result = Category::insert($categories);
         self::assertTrue($result);
@@ -118,6 +123,22 @@ class CategoryTest extends TestCase
         $category = Category::find("FOOD");
         $result = $category->delete();
         self::assertTrue($result);
+
+        $total = Category::count();
+        self::assertEquals(0, $total);
+    }
+
+    public function testDeleteMany(): void
+    {
+        $categories = $this->seedCategories(10);
+
+        $result = Category::insert($categories);
+        self::assertTrue($result);
+
+        $total = Category::count();
+        self::assertEquals(10, $total);
+
+        Category::whereNull('description')->delete();
 
         $total = Category::count();
         self::assertEquals(0, $total);
