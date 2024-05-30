@@ -35,3 +35,11 @@ create table products
 ) engine innodb;
 
 select * from products
+
+-- ======================== 29 Database Migration ========================
+-- Untuk mencoba migration, kita drop dulu semua table yangsudah kita buat dan mulai dari 0
+
+drop table products;
+drop table categories;
+drop table counters;
+-- ======================== End of Database Migration ========================
