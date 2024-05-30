@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase
@@ -63,5 +64,29 @@ class CategoryTest extends TestCase
 
         $result = $category->save();
         self::assertTrue($result);
+    }
+
+    public function testSelect(): void
+    {
+        for ($i = 0; $i < 5; $i++) {
+            $category = new Category();
+
+            $category->id = "ID $i";
+            $category->name = "Category $i";
+            $category->save();
+        }
+
+        $categories = Category::whereNull("description")->get();
+
+        self::assertEquals(5, $categories->count());
+
+        $categories->each(function ($category) {
+            self::assertNull($category->description);
+
+            $category->description = "updated";
+            $category->update();
+
+            Log::info(json_encode($category));
+        });
     }
 }
