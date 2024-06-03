@@ -22,7 +22,7 @@ class VoucherTest extends TestCase
         self::assertNotNull($voucher->id);
     }
 
-    public function testVoucherCodeUUID(): void
+    public function testCreateVoucherCodeUUID(): void
     {
         $voucher = new Voucher();
 
