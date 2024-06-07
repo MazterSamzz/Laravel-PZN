@@ -20,7 +20,8 @@ class CategoryTest extends TestCase
         for ($i = 0; $i < $qty; $i++) {
             $categories[] = [
                 "id" => "ID $i",
-                "name" => "Category $i"
+                "name" => "Category $i",
+                "is_active" => true
             ];
         }
 
@@ -34,6 +35,7 @@ class CategoryTest extends TestCase
 
             $category->id = "ID $i";
             $category->name = "Category $i";
+            $category->is_active = true;
             $category->save();
         }
     }
@@ -230,5 +232,18 @@ class CategoryTest extends TestCase
 
         self::assertNotNull($products);
         self::assertCount(10, $products);
+    }
+
+    public function testRelationshipQuery()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+        $category = Category::find('FOOD');
+        $products = $category->products;
+        echo $products;
+        self::assertCount(10, $products);
+
+        $outOfStockProducts = $category->products()->where('stock', '<=', 0)->get();
+        self::assertCount(10, $outOfStockProducts);
     }
 }
