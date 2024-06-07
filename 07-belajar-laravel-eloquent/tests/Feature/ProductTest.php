@@ -25,4 +25,19 @@ class ProductTest extends TestCase
         self::assertNotNull($category);
         self::assertEquals('FOOD', $category->id);
     }
+
+    public function testhasOneOfMany(): void
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+        $category = Category::find('FOOD');
+
+        $cheapestProduct = $category->cheapestProduct;
+        self::assertNotNull($cheapestProduct);
+        self::assertEquals(0, $cheapestProduct->id);
+        
+        $mostExpensiveProduct = $category->mostExpensiveProduct;
+        self::assertNotNull($mostExpensiveProduct);
+        self::assertEquals(9, $mostExpensiveProduct->id);
+    }
 }

@@ -242,8 +242,9 @@ class CategoryTest extends TestCase
         $products = $category->products;
         echo $products;
         self::assertCount(10, $products);
-
-        $outOfStockProducts = $category->products()->where('stock', '<=', 0)->get();
-        self::assertCount(10, $outOfStockProducts);
+        echo "==============";
+        $outOfStockProducts = $category->products()->where('stock', '<', 6)->get();
+        echo $outOfStockProducts;
+        self::assertCount(6, $outOfStockProducts);
     }
 }
