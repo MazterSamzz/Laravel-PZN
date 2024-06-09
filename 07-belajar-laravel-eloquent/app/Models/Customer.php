@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
@@ -27,6 +28,10 @@ class Customer extends Model
             'wallet_id',    // FK on virtual_accounts table
             'id',           // PK on customers table
             'id'            // PK on wallets table
-    );
+        );
+    }
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'customer_id', 'id');
     }
 }
