@@ -43,7 +43,7 @@ class Customer extends Model
             'customers_likes_products',
             'customer_id',
             'product_id'
-        )->withPivot('created_at');
+        )->withPivot('created_at')->using(Like::class);
     }
     public function likeProductsLastWeek(): BelongsToMany
     {
