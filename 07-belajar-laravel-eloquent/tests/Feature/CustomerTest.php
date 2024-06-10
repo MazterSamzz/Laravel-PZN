@@ -6,11 +6,14 @@ use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Wallet;
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\CustomerSeeder;
+use Database\Seeders\ProductSeeder;
 use Database\Seeders\VirtualAccountSeeder;
 use Database\Seeders\WalletSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class CustomerTest extends TestCase
@@ -32,7 +35,7 @@ class CustomerTest extends TestCase
         $customer->name = 'Ivan';
         $customer->email = 'MazterSamzz@gmail.com';
         $customer->save();
-        
+
         $wallet = new Wallet();
         $wallet->amount = 1000000;
 
@@ -71,5 +74,33 @@ class CustomerTest extends TestCase
         self::assertNotNull($virtualAccount);
         self::assertEquals('BCA', $virtualAccount->bank);
         self::assertEquals('1231234432', $virtualAccount->va_number);
+    }
+
+    public function testManyToMany(): void
+    {
+        $this->seed([CustomerSeeder::class, CategorySeeder::class, ProductSeeder::class]);
+
+        $customer = Customer::find('IVAN');
+        self::assertNotNull($customer);
+
+        $customer->likeProducts()->attach('1'); // ID product = 1
+        $customer->likeProducts()->attach('2'); // ID product = 2
+
+        $products = $customer->likeProducts;
+        self::assertCount(2, $products);
+
+        self::assertEquals(1, $products[0]->id);
+        self::assertEquals(2, $products[1]->id);
+    }
+
+    public function testManyToManyDetach(): void
+    {
+        $this->testManyToMany();
+        $customer = Customer::find('IVAN');
+        // DB::table('customers_likes_products')->where('customer_id', $customer->id)->where('product_id', '1')->delete();
+        $customer->likeProducts()->detach('1');
+
+        $products = $customer->likeProducts;
+        self::assertCount(1, $products);
     }
 }
