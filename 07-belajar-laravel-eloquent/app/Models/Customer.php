@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Customer extends Model
 {
@@ -53,5 +54,10 @@ class Customer extends Model
             'customer_id',
             'product_id'
         )->withPivot('created_at')->wherePivot('created_at', '>=', now()->addDay(-7));
+    }
+
+    public function image(): MorphOne
+    {
+        return $this->morphOne('App\Models\Image', 'imageable');
     }
 }
