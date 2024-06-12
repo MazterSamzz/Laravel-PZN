@@ -40,7 +40,7 @@ class CommentSeeder extends Seeder
         $comment->email = 'MazterSamzz@voucher.com';
         $comment->title = 'Voucher Title';
         $comment->commentable_id = $voucher->id;
-        $comment->commentable_type = Voucher::class;
+        $comment->commentable_type = 'voucher';
         $comment->save();
     }
 }
