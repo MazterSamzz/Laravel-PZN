@@ -9,6 +9,7 @@ use Database\Seeders\CategorySeeder;
 use Database\Seeders\CommentSeeder;
 use Database\Seeders\ImageSeeder;
 use Database\Seeders\ProductSeeder;
+use Database\Seeders\TagSeeder;
 use Database\Seeders\VoucherSeeder;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -103,5 +104,25 @@ class ProductTest extends TestCase
 
         $comment = $product->oldestComment;
         self::assertNotNull($comment);
+    }
+
+    public function testmanyToManyPolymorph(): void
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, VoucherSeeder::class, TagSeeder::class]);
+
+        $product = Product::find('1');
+        self::assertNotNull($product);
+
+        $tags = $product->tags;
+        self::assertNotNull($tags);
+
+        foreach ($tags as $tag) {
+            self::assertNotNull($tag->id);
+            self::assertNotNull($tag->name);
+
+            $vouchers = $tag->vouchers;
+            self::assertNotNull($vouchers);
+            self::assertCount(1, $vouchers);
+        }
     }
 }
