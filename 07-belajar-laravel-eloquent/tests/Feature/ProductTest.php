@@ -10,6 +10,7 @@ use Database\Seeders\CommentSeeder;
 use Database\Seeders\ImageSeeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\VoucherSeeder;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -88,5 +89,19 @@ class ProductTest extends TestCase
             self::assertEquals(Product::class, $comment->commentable_type);
             self::assertEquals($product->id, $comment->commentable_id);
         }
+    }
+
+    public function testOneOfManyPolymorphic(): void
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, VoucherSeeder::class, CommentSeeder::class]);
+
+        $product = Product::find('1');
+        self::assertNotNull($product);
+
+        $comment = $product->latestComment;
+        self::assertNotNull($comment);
+
+        $comment = $product->oldestComment;
+        self::assertNotNull($comment);
     }
 }
