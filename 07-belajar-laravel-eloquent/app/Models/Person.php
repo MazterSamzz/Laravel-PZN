@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
     protected function fullName(): Attribute
     {
         return Attribute::make(
