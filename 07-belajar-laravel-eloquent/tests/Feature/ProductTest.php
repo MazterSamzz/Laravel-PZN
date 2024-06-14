@@ -14,6 +14,7 @@ use Database\Seeders\VoucherSeeder;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 use function PHPUnit\Framework\assertNotNull;
@@ -137,5 +138,29 @@ class ProductTest extends TestCase
         $products = $products->toQuery()->where('price', 5000)->get();
         self::assertNotNull($products);
         self::assertEquals("4", $products[0]->id);
+    }
+
+    public function testSerialization()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+        $products = Product::get();
+        self::assertCount(10, $products);
+
+        $json = $products->toJson(JSON_PRETTY_PRINT);
+        Log::info($json);
+    }
+
+    public function testSerializationRelation()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, ImageSeeder::class]);
+
+        $products = Product::get();
+        self::assertCount(10, $products);
+
+        $products->load(['category', 'image']);
+
+        $json = $products->toJson(JSON_PRETTY_PRINT);
+        Log::info($json);
     }
 }
