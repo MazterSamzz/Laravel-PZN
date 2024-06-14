@@ -12,7 +12,7 @@ class EmployeeTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function testEmployee(): void
     {
         $employee1 = Employee::factory()->programmer()->make();
         $employee1->id = '1';

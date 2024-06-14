@@ -28,7 +28,7 @@ class CommentSeeder extends Seeder
         $comment->email = "MazterSamzz@product$id.com";
         $comment->title = "Product Title $id";
         $comment->commentable_id = $product->id;
-        $comment->commentable_type = Product::class;
+        $comment->commentable_type = 'product';
         $comment->save();
     }
 

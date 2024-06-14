@@ -20,6 +20,8 @@ class CommentTest extends TestCase
         $comment->email = 'MazterSamzz@gmail.com';
         $comment->title = 'Sample Title';
         $comment->comment = ' Sample Comment ';
+        $comment->commentable_id = '1';
+        $comment->commentable_type = 'product';
 
         $comment->save();
         Log::info(json_encode($comment));
@@ -31,6 +33,8 @@ class CommentTest extends TestCase
     {
         $comment = new Comment();
         $comment->email = 'MazterSamzz@gmail.com';
+        $comment->commentable_id = '1';
+        $comment->commentable_type = 'product';
 
         $comment->save();
 

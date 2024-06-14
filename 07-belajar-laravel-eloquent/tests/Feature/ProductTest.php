@@ -75,7 +75,7 @@ class ProductTest extends TestCase
         foreach ($comments as $comment) {
             self::assertEquals('Product Title 1', $comment->title);
             self::assertEquals('MazterSamzz@product1.com', $comment->email);
-            self::assertEquals(Product::class, $comment->commentable_type);
+            self::assertEquals('product', $comment->commentable_type);
             self::assertEquals($product->id, $comment->commentable_id);
         }
 
@@ -88,7 +88,7 @@ class ProductTest extends TestCase
         foreach ($comments as $comment) {
             self::assertEquals('Product Title 2', $comment->title);
             self::assertEquals('MazterSamzz@product2.com', $comment->email);
-            self::assertEquals(Product::class, $comment->commentable_type);
+            self::assertEquals('product', $comment->commentable_type);
             self::assertEquals($product->id, $comment->commentable_id);
         }
     }

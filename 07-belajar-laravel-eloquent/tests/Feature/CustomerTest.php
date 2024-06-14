@@ -156,7 +156,7 @@ class CustomerTest extends TestCase
 
     public function testOneToOnePolyMorphic(): void
     {
-        $this->seed([CustomerSeeder::class, ProductSeeder::class, ImageSeeder::class]);
+        $this->seed([CustomerSeeder::class, CategorySeeder::class, ProductSeeder::class, ImageSeeder::class]);
 
         $customer = Customer::find('Ivan');
         self::assertNotNull($customer);
