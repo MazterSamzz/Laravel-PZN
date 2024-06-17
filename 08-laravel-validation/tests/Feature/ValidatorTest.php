@@ -262,4 +262,72 @@ class ValidatorTest extends TestCase
         $message = $validator->getMessageBag();
         Log::info($message->toJson(JSON_PRETTY_PRINT));
     }
+
+    public function testNestedArray(): void
+    {
+        $data = [
+            'name' => [
+                'first' => 'Ivan',
+                'last' => 'Kristyanto'
+            ],
+            'address' => [
+                'street' => 'Jalan Raya',
+                'city' => 'Jakarta',
+                'country' => 'Indonesia'
+            ]
+        ];
+
+        $rules = [
+            'name.first' => ["required", 'max:100'],
+            'name.last' => ['max:100'],
+            'address.street' => ['max:200'],
+            'address.city' => ['required', 'max:100'],
+            'address.country' => ['required', 'max:100']
+        ];
+
+        $validator = Validator::make($data, $rules);
+        self::assertNotNull($validator);
+        self::assertTrue($validator->passes());
+
+        $message = $validator->getMessageBag();
+        Log::info($message->toJson(JSON_PRETTY_PRINT));
+    }
+
+    public function testNestedIndexedArray(): void
+    {
+        $data = [
+            'name' => [
+                'first' => 'Ivan',
+                'last' => 'Kristyanto'
+            ],
+            'address' => [
+                [
+                    'street' => 'Jalan Raya',
+                    'city' => 'Jakarta',
+                    'country' => 'Indonesia'
+                ],
+                [
+                    'street' => 'Jalan Kecil',
+                    'city' => 'Jakarta',
+                    'country' => 'Indonesia'
+                ]
+            ]
+
+        ];
+
+        $rules = [
+            'name.first' => ["required", 'max:100'],
+            'name.last' => ['max:100'],
+            'address.*.street' => ['max:200'],
+            'address.*.city' => ['required', 'max:100'],
+            'address.*.country' => ['required', 'max:100']
+        ];
+
+        $validator = Validator::make($data, $rules);
+        self::assertNotNull($validator);
+        self::assertTrue($validator->passes());
+
+        $message = $validator->getMessageBag();
+        Log::info($message->toJson(JSON_PRETTY_PRINT));
+    }
 }
