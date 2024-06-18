@@ -18,3 +18,9 @@ https://github.com/ProgrammerZamanNow/belajar-laravel-database
 
 07 Laravel Eloquent
 https://github.com/ProgrammerZamanNow/belajar-laravel-eloquent
+
+08 Laravel Validation
+https://github.com/ProgrammerZamanNow/belajar-laravel-validation
+
+09 Laravel Eloquent API Resource
+https://github.com/ProgrammerZamanNow/belajar-laravel-eloquent-api-resource
