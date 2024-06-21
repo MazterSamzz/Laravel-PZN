@@ -49,4 +49,14 @@ class ProductTest extends TestCase
             self::assertContains("Product $i of Gadget", $names);
         }
     }
+
+    public function testProductPaging(): void
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+        $response = $this->get('/api/products-paging')->assertStatus(200);
+
+        self::assertNotNull($response->json("links"));
+        self::assertNotNull($response->json("meta"));
+        self::assertNotNull($response->json("data"));
+    }
 }
