@@ -31,11 +31,12 @@ Route::get('/categories-custom', function () {
 
 Route::get('/products/{id}', function ($id) {
     $product = Product::findOrFail($id);
+    $product->load('category');
     return new ProductResource($product);
 });
 
 Route::get('/products', function () {
-    $products = Product::all();
+    $products = Product::with('category')->get();
     return new ProductCollection($products);
 });
 
