@@ -22,7 +22,7 @@ class CategoryTest extends TestCase
         $this->get("/api/categories/$category->id")
             ->assertStatus(200)
             ->assertJson([
-                'data' => [
+                'value' => [
                     'id' => $category->id,
                     'name' => $category->name,
                     'created_at' => $category->created_at->toJSON(),
