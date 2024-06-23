@@ -32,7 +32,9 @@ Route::get('/categories-custom', function () {
 Route::get('/products/{id}', function ($id) {
     $product = Product::findOrFail($id);
     $product->load('category');
-    return new ProductResource($product);
+    return (new ProductResource($product))
+        ->response()
+        ->header("X-Powered-By", "Programmer Zaman Now");
 });
 
 Route::get('/products', function () {

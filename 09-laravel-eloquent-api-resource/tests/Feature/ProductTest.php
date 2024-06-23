@@ -21,6 +21,7 @@ class ProductTest extends TestCase
 
         $this->get("/api/products/$product->id")
             ->assertStatus(200)
+            ->assertHeader("X-Powered-By", "Programmer Zaman Now")
             ->assertJson([
                 "value" => [
                     "name" => $product->name,
@@ -39,7 +40,9 @@ class ProductTest extends TestCase
     public function testCollectionWrap(): void
     {
         $this->seed([CategorySeeder::class, ProductSeeder::class]);
-        $response = $this->get('/api/products')->assertStatus(200);
+        $response = $this->get('/api/products')
+            ->assertStatus(200)
+            ->assertHeader("X-Powered-By", "Programmer Zaman Now");
 
         $names = $response->json("data.*.name");
 
