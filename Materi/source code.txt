@@ -1,4 +1,4 @@
-01 Belajar Laravel Dasar
+01 Laravel Dasar
 https://github.com/ProgrammerZamanNow/belajar-laravel-dasar
 
 02 Web Login dan Todo List
@@ -24,3 +24,6 @@ https://github.com/ProgrammerZamanNow/belajar-laravel-validation
 
 09 Laravel Eloquent API Resource
 https://github.com/ProgrammerZamanNow/belajar-laravel-eloquent-api-resource
+
+10 Laravel Restful API
+https://github.com/ProgrammerZamanNow/belajar-laravel-restful-api
