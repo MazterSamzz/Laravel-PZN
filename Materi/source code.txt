@@ -30,3 +30,6 @@ https://github.com/ProgrammerZamanNow/belajar-laravel-restful-api
 
 11 Laravel Todolist dengan MySQL
 https://github.com/ProgrammerZamanNow/belajar-laravel-web-todolist
+
+12 Laravel Security
+ https://github.com/ProgrammerZamanNow/belajar-laravel-security
