@@ -70,4 +70,17 @@ class UserTest extends TestCase
         ])
             ->assertSeeText("Hello Ivan Kristyanto");
     }
+
+    public function testUserProvider(): void
+    {
+        $this->seed(UserSeeder::class);
+
+        $this->get("/api/users/current", ["Accept" => "application/json"])
+            ->assertStatus(401);
+
+        $this->get("/simple-api/users/current", [
+            "Accept" => "application/json",
+            "API-Key" => "secret"
+        ])->assertSeeText("Hello Ivan K");
+    }
 }
