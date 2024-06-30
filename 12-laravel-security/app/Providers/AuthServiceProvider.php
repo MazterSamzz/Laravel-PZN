@@ -2,11 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Contact;
+use App\Models\User;
 use App\Providers\Guards\TokenGuard;
 use App\Providers\User\SimpleProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -32,6 +35,16 @@ class AuthServiceProvider extends ServiceProvider
 
         Auth::provider("simple", function (Application $app, array $config) {
             return new SimpleProvider();
+        });
+
+        Gate::define("get-contact", function (User $user, Contact $contact) {
+            return $user->id == $contact->user_id;
+        });
+        Gate::define("update-contact", function (User $user, Contact $contact) {
+            return $user->id == $contact->user_id;
+        });
+        Gate::define("delete-contact", function (User $user, Contact $contact) {
+            return $user->id == $contact->user_id;
         });
     }
 }
