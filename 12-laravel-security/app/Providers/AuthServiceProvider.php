@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Contact;
+use App\Models\Todo;
 use App\Models\User;
+use App\Policies\TodoPolicy;
 use App\Providers\Guards\TokenGuard;
 use App\Providers\User\SimpleProvider;
 use Illuminate\Auth\Access\Response;
@@ -15,6 +17,9 @@ use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
+    protected $policies = [
+        Todo::class => TodoPolicy::class
+    ];
     /**
      * Register services.
      */
