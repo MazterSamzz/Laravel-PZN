@@ -12,6 +12,6 @@ class Todo extends Model
 
     public function users(): BelongsTo
     {
-        return $this->belongTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
