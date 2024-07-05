@@ -36,3 +36,6 @@ https://github.com/ProgrammerZamanNow/belajar-laravel-web-todolist
 
 13 Laravel Redis
 https://github.com/ProgrammerZamanNow/belajar-laravel-redis
+
+14 Laravel HTTP Client
+https://github.com/ProgrammerZamanNow/belajar-laravel-http-client
