@@ -33,3 +33,6 @@ https://github.com/ProgrammerZamanNow/belajar-laravel-web-todolist
 
 12 Laravel Security
  https://github.com/ProgrammerZamanNow/belajar-laravel-security
+
+13 Laravel Redis
+https://github.com/ProgrammerZamanNow/belajar-laravel-redis
