@@ -46,4 +46,16 @@ class HttpTest extends TestCase
         ])->get("https://enh047rcf2az6.x.pipedream.net");
         self::assertTrue($response->ok());
     }
+
+    public function testHeader(): void
+    {
+        $response = Http::withQueryParameters([
+            "page" => 1,
+            "limit" => 10
+        ])->withHeaders([
+            "accept" => "application/json",
+            "x-request-ID" => '123123123'
+        ])->get("https://enh047rcf2az6.x.pipedream.net");
+        self::assertTrue($response->ok());
+    }
 }
