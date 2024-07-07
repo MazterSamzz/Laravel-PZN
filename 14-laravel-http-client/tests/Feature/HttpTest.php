@@ -73,4 +73,14 @@ class HttpTest extends TestCase
         ], "enh047rcf2az6.x.pipedream.net")->get("https://enh047rcf2az6.x.pipedream.net");
         self::assertTrue($response->ok());
     }
+
+    public function testFormPost(): void
+    {
+        $response = Http::asForm()->post("https://enh047rcf2az6.x.pipedream.net", [
+            "username" => "admin",
+            "password" => "admin"
+        ]);
+
+        self::assertTrue($response->ok());
+    }
 }
