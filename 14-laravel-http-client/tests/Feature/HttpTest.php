@@ -106,4 +106,15 @@ class HttpTest extends TestCase
 
         self::assertTrue($response->ok());
     }
+
+    public function testTimeout(): void
+    {
+        $response = Http::timeout(5)->asJson()
+            ->post("https://enh047rcf2az6.x.pipedream.net", [
+                "username" => "admin",
+                "password" => "admin"
+            ]);
+
+        self::assertTrue($response->ok());
+    }
 }
